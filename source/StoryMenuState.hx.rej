@@ -1,0 +1,12 @@
+diff a/source/StoryMenuState.hx b/source/StoryMenuState.hx	(rejected hunks)
+@@ -197,6 +197,10 @@ class StoryMenuState extends MusicBeatState
+ 
+ 		trace("Line 165");
+ 
++		#if mobileC
++		addVirtualPad(FULL, A_B);
++		#end
++
+ 		super.create();
+ 	}
+ 

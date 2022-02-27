@@ -16,9 +16,14 @@ class Main extends Sprite
 	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var framerate:Int = 60; // How many frames per second the game should run at.
-	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
+	var skipSplash:Bool = false; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var fpsVar:FPS;
+	public static var memoryCounter:MemoryCounter;
+
+
+	public static var path:String = lime.system.System.applicationStorageDirectory;
+
 
 	// You can pretty much ignore everything from here on - your code should go in your states.
 
@@ -51,6 +56,23 @@ class Main extends Sprite
 		setupGame();
 	}
 
+	public static function dumpCache() // THIS MOD WASTES 1-2 FUCKING G I G A B Y T E S OF MEMORY SO OF COURSE I COPIED KADE'S CODE FOR FUCKS SAKE
+		{
+			@:privateAccess
+			for (key in FlxG.bitmap._cache.keys())
+			{
+				var obj = FlxG.bitmap._cache.get(key);
+				if (obj != null)
+				{
+					Assets.cache.removeBitmapData(key);
+					FlxG.bitmap._cache.remove(key);
+					obj.destroy();
+				}
+			}
+			Assets.cache.clear("songs");
+			// */
+		}
+
 	private function setupGame():Void
 	{
 		var stageWidth:Int = Lib.current.stage.stageWidth;
@@ -69,21 +91,25 @@ class Main extends Sprite
 		initialState = TitleState;
 		#end
 
-		Paths.getModFolders();
-		ClientPrefs.startControls();
+		ClientPrefs.startControls();	
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
-
-		#if !mobile
+		
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
-		#end
 
+
+		memoryCounter = new MemoryCounter(10, 3, 0xffffff);
+		addChild(memoryCounter);
+		if(memoryCounter != null) {
+			memoryCounter.visible = ClientPrefs.showFPS;
+		
 		#if html5
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
+	}
 	}
 }

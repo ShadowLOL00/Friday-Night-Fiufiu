@@ -11,6 +11,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
 import flixel.FlxSubState;
 import flash.text.TextField;
@@ -30,14 +31,14 @@ using StringTools;
 // TO DO: Redo the menu creation system for not being as dumb
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Notas', 'Controles', 'Preferencias'];
+	var options:Array<String> = ['Notes', 'Keyboard Controls', 'Mobile Controls', 'Preferences'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
-	public static var menuBG:FlxSprite;
+	public static var menuBG:FlxSprite;		
 
 	override function create() {
 		#if desktop
-		DiscordClient.changePresence("Menu de Opções", null);
+		DiscordClient.changePresence("Options Menu", null);
 		#end
 
 		menuBG = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
@@ -60,6 +61,10 @@ class OptionsState extends MusicBeatState
 		}
 		changeSelection();
 
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B);
+		#end		
+
 		super.create();
 	}
 
@@ -67,10 +72,11 @@ class OptionsState extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 		changeSelection();
-	}
+                _virtualpad.alpha = 0.75;
+      	}
 
 	override function update(elapsed:Float) {
-		super.update(elapsed);
+		super.update(elapsed);		
 
 		if (controls.UI_UP_P) {
 			changeSelection(-1);
@@ -89,15 +95,18 @@ class OptionsState extends MusicBeatState
 				item.alpha = 0;
 			}
 
+                        _virtualpad.alpha = 0;
+
 			switch(options[curSelected]) {
-				case 'Notas':
-					openSubState(new NotesSubstate());
-
-				case 'Controles':
+				case 'Notes':
+				 	openSubState(new NotesSubstate());
+				case 'Keyboard Controls':                                        
 					openSubState(new ControlsSubstate());
+				case 'Mobile Controls':
+					MusicBeatState.switchState(new CustomControlsState());					
 
-				case 'Preferencias':
-					openSubState(new PreferencesSubstate());
+				case 'Preferences':                                        
+					openSubState(new PreferencesSubstate());									
 			}
 		}
 	}
@@ -139,7 +148,7 @@ class NotesSubstate extends MusicBeatSubstate
 
 	var posX = 250;
 	public function new() {
-		super();
+		super();	
 
 		grpNotes = new FlxTypedGroup<FlxSprite>();
 		add(grpNotes);
@@ -177,10 +186,13 @@ class NotesSubstate extends MusicBeatSubstate
 			newShader.brightness = ClientPrefs.arrowHSV[i][2] / 100;
 			shaderArray.push(newShader);
 		}
-		hsvText = new Alphabet(0, 0, "Matiz    Saturacao  Brilho", false, false, 0, 0.65);
-		hsvText.color = FlxColor.WHITE;
+		hsvText = new Alphabet(0, 0, "Hue    Saturation  Brightness", false, false, 0, 0.65);
 		add(hsvText);
 		changeSelection();
+
+		#if mobileC
+		addVirtualPad(FULL, A_B);
+		#end			
 	}
 
 	var changingNote:Bool = false;
@@ -294,7 +306,7 @@ class NotesSubstate extends MusicBeatSubstate
 				});
 				grpNotes.forEachAlive(function(spr:FlxSprite) {
 					spr.alpha = 0;
-				});
+				});                
 				close();
 			}
 			changingNote = false;
@@ -397,25 +409,25 @@ class ControlsSubstate extends MusicBeatSubstate {
 	private static var curSelected:Int = -1;
 	private static var curAlt:Bool = false;
 
-	private static var defaultKey:String = 'Redefinir Controles';
+	private static var defaultKey:String = 'Reset to Default Keys';
 	private var bindLength:Int = 0;
 
 	var optionShit:Array<Dynamic> = [
 		['NOTES'],
-		['Esquerda', 'note_left'],
-		['Baixo', 'note_down'],
-		['Cima', 'note_up'],
-		['Direita', 'note_right'],
+		['Left', 'note_left'],
+		['Down', 'note_down'],
+		['Up', 'note_up'],
+		['Right', 'note_right'],
 		[''],
 		['UI'],
-		['Esquerda', 'ui_left'],
-		['Baixo', 'ui_down'],
-		['Cima', 'ui_up'],
-		['Direita', 'ui_right'],
+		['Left', 'ui_left'],
+		['Down', 'ui_down'],
+		['Up', 'ui_up'],
+		['Right', 'ui_right'],
 		[''],
-		['Resetar', 'reset'],
-		['Aceitar', 'accept'],
-		['Voltar', 'back'],
+		['Reset', 'reset'],
+		['Accept', 'accept'],
+		['Back', 'back'],
 		['Pause', 'pause'],
 	];
 
@@ -428,6 +440,7 @@ class ControlsSubstate extends MusicBeatSubstate {
 
 	public function new() {
 		super();
+
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
@@ -462,6 +475,10 @@ class ControlsSubstate extends MusicBeatSubstate {
 			}
 		}
 		changeSelection();
+
+		#if mobileC
+		addVirtualPad(FULL, A_B);
+		#end		
 	}
 
 	var leaving:Bool = false;
@@ -483,9 +500,9 @@ class ControlsSubstate extends MusicBeatSubstate {
 				ClientPrefs.reloadControls();
 				grpOptions.forEachAlive(function(spr:Alphabet) {
 					spr.alpha = 0;
-				});
+				});              
 				close();
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(Paths.sound('cancelMenu'));	
 			}
 
 			if(controls.ACCEPT && nextAccept <= 0) {
@@ -705,35 +722,39 @@ class PreferencesSubstate extends MusicBeatSubstate
 {
 	private static var curSelected:Int = 0;
 	static var unselectableOptions:Array<String> = [
-		'GRAFICOS',
-		'JOGABILIDADE'
+		'GRAPHICS',
+		'GAMEPLAY'
 	];
 	static var noCheckbox:Array<String> = [
 		'Framerate',
-		'Delay das Notas'
+		'Note Delay',
+		'Scroll Speed',
+		'Note Size'
 	];
 
 	static var options:Array<String> = [
-		'GRAFICOS',
-		'Baixa Qualidade',
+		'GRAPHICS',
+		'Low Quality',
 		'Anti-Aliasing',
-		'Persistir os Dados em Cache',
+		'Persistent Cached Data',
 		#if !html5
 		'Framerate', //Apparently 120FPS isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 		#end
-		'JOGABILIDADE',
+		'GAMEPLAY',
 		'Downscroll',
 		'Middlescroll',
-		'Missclick sem Erro',
-		'Delay das Notas',
+		'Ghost Tapping',
+		'Note Delay',
 		'Note Splashes',
-		'Esconder Interface',
-		'Esconder Duracao da Musica',
-		'Luzes Piscantes',
-		'Zoom da Camera'
-		#if !mobile
-		,'Contador de FPS'
-		#end
+		'Note Size',
+		'Custom Scroll Speed',
+		'Scroll Speed',
+		'Hide HUD',
+		'Hide Song Length',
+		'Flashing Lights',
+		'Camera Zooms',
+		'FPS Counter'
+
 	];
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
@@ -748,6 +769,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+
 		// avoids lagspikes while scrolling through menus!
 		showCharacter = new Character(840, 170, 'bf', true);
 		showCharacter.setGraphicSize(Std.int(showCharacter.width * 0.8));
@@ -816,6 +838,10 @@ class PreferencesSubstate extends MusicBeatSubstate
 		}
 		changeSelection();
 		reloadValues();
+
+		#if mobileC
+		addVirtualPad(FULL, A_B);
+		#end		
 	}
 
 	var nextAccept:Int = 5;
@@ -847,9 +873,9 @@ class PreferencesSubstate extends MusicBeatSubstate
 			if(showCharacter != null) {
 				showCharacter.alpha = 0;
 			}
-			descText.alpha = 0;
+			descText.alpha = 0;                        
 			close();
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			FlxG.sound.play(Paths.sound('cancelMenu'));	
 		}
 
 		var usesCheckbox = true;
@@ -868,7 +894,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 						if(Main.fpsVar != null)
 							Main.fpsVar.visible = ClientPrefs.showFPS;
 
-					case 'Baixa Qualidade':
+					case 'Low Quality':
 						ClientPrefs.lowQuality = !ClientPrefs.lowQuality;
 
 					case 'Anti-Aliasing':
@@ -888,13 +914,13 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Note Splashes':
 						ClientPrefs.noteSplashes = !ClientPrefs.noteSplashes;
 
-					case 'Luzes Piscantes':
+					case 'Flashing Lights':
 						ClientPrefs.flashing = !ClientPrefs.flashing;
 
-					case 'Violencia':
+					case 'Violence':
 						ClientPrefs.violence = !ClientPrefs.violence;
 
-					case 'Palavroes':
+					case 'Swearing':
 						ClientPrefs.cursing = !ClientPrefs.cursing;
 
 					case 'Downscroll':
@@ -903,20 +929,20 @@ class PreferencesSubstate extends MusicBeatSubstate
 					case 'Middlescroll':
 						ClientPrefs.middleScroll = !ClientPrefs.middleScroll;
 
-					case 'Missclick sem Erro':
+					case 'Ghost Tapping':
 						ClientPrefs.ghostTapping = !ClientPrefs.ghostTapping;
 
-					case 'Zoom da Camera':
+					case 'Camera Zooms':
 						ClientPrefs.camZooms = !ClientPrefs.camZooms;
 
-					case 'Esconder Interface':
+					case 'Hide HUD':
 						ClientPrefs.hideHud = !ClientPrefs.hideHud;
 
-					case 'Persistir os Dados em Cache':
+					case 'Persistent Cached Data':
 						ClientPrefs.imagesPersist = !ClientPrefs.imagesPersist;
 						FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
 					
-					case 'Esconder Duracao da Musica':
+					case 'Hide Song Length':
 						ClientPrefs.hideTime = !ClientPrefs.hideTime;
 				}
 				FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -939,7 +965,8 @@ class PreferencesSubstate extends MusicBeatSubstate
 							FlxG.drawFramerate = ClientPrefs.framerate;
 							FlxG.updateFramerate = ClientPrefs.framerate;
 						}
-					case 'Delay das Notas':
+
+					case 'Note Delay':
 						var mult:Int = 1;
 						if(holdTime > 1.5) { //Double speed after 1.5 seconds holding
 							mult = 2;
@@ -980,37 +1007,43 @@ class PreferencesSubstate extends MusicBeatSubstate
 		var daText:String = '';
 		switch(options[curSelected]) {
 			case 'Framerate':
-				daText = "Bem autoexplicativo, né?\nO valor original é 60.";
-			case 'Delay das Notas':
-				daText = "Muda o atraso da nota para chegar.\nÉ útil para prevenir o lag de áudio em fones sem fio.";
-			case 'Contador de FPS':
-				daText = "Se desmarcado, esconderá o contador.";
-			case 'Baixa Qualidade':
-				daText = "Se marcado, isso esconde os detalhes de fundo,\ndiminui os tempos de carregamento e aumenta performance.";
-			case 'Persistir os Dados em Cache':
-				daText = "Se marcado, imagens carregadas estarão na memória\naté o jogo fechar, isso aumenta a porcentagem de RAM,\nmas basicamente faz os recarregamentos serem instantâneos.";
+				daText = "Pretty self explanatory, isn't it?\nDefault value is 60.";
+			case 'Note Delay':
+				daText = "Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.";
+			case 'FPS Counter':
+				daText = "If unchecked, hides FPS Counter.";
+			case 'Low Quality':
+				daText = "If checked, disables some background details,\ndecreases loading times and improves performance.";
+			case 'Persistent Cached Data':
+				daText = "If checked, images loaded will stay in memory\nuntil the game is closed, this increases memory usage,\nbut basically makes reloading times instant.";
 			case 'Anti-Aliasing':
-				daText = "Se desmarcado, desativa o anti-aliasing, aumenta performance\npelo custo dos gráficos não terem a mesma qualidade de antes.";
+				daText = "If unchecked, disables anti-aliasing, increases performance\nat the cost of the graphics not looking as smooth.";
 			case 'Downscroll':
-				daText = "Se marcado, notas vão para baixo ao invés de para cima,\nsimples.";
+				daText = "If checked, notes go Down instead of Up, simple enough.";
 			case 'Middlescroll':
-				daText = "Se marcado, esconde as notas do inimigo e suas notas estarão centralizadas.";
-			case 'Missclick sem Erro':
-				daText = "Se marcado, você não terá erros ao clicar\nenquanto não há notas para acertar.";
-			case 'Palavroes':
-				daText = "Se desmarcado, sua mãe não ficará puta com você.";
-			case 'Violencia':
-				daText = "Se desmarcado, você não ficará enojado como frequentemente.";
+				daText = "If checked, hides Opponent's notes and your notes get centered.";
+			case 'Ghost Tapping':
+				daText = "If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.";
+			case 'Swearing':
+				daText = "If unchecked, your mom won't be angry at you.";
+			case 'Violence':
+				daText = "If unchecked, you won't get disgusted as frequently.";
+			case 'Custom Scroll Speed'://for Joseph -bbpanzu
+				daText = "Leave unchecked for chart-dependent scroll speed";
+			case 'Scroll Speed':
+				daText = "Arrow speed (Custom must be enabled)";
+			case 'Note Size':
+				daText = "Size of notes and stuff";
 			case 'Note Splashes':
-				daText = "Se desmarcado, acertando notas com \"Sick!\" não mostrará partículas.";
-			case 'Luzes Piscantes':
-				daText = "Desative se ter problemas de epilepsia!";
-			case 'Zoom da Camera':
-				daText = "Se desmarcado, a câmera não apresentará zoomings a cada beat.";
-			case 'Esconder Interface':
-				daText = "Se marcado, esconderá os elementos da interface.";
-			case 'Esconder Duracao da Musica':
-				daText = "Se marcado, a barra da duração da música\nirá sumir.";
+				daText = "If unchecked, hitting \"Sick!\" notes won't show particles.";
+			case 'Flashing Lights':
+				daText = "Uncheck this if you're sensitive to flashing lights!";
+			case 'Camera Zooms':
+				daText = "If unchecked, the camera won't zoom in on a beat hit.";
+			case 'Hide HUD':
+				daText = "If checked, hides most HUD elements.";
+			case 'Hide Song Length':
+				daText = "If checked, the bar showing how much time is left\nwill be hidden.";
 		}
 		descText.text = daText;
 
@@ -1055,33 +1088,33 @@ class PreferencesSubstate extends MusicBeatSubstate
 			if(checkbox != null) {
 				var daValue:Bool = false;
 				switch(options[checkboxNumber[i]]) {
-					case 'Contador de FPS':
+					case 'FPS Counter':
 						daValue = ClientPrefs.showFPS;
-					case 'Baixa Qualidade':
+					case 'Low Quality':
 						daValue = ClientPrefs.lowQuality;
 					case 'Anti-Aliasing':
 						daValue = ClientPrefs.globalAntialiasing;
 					case 'Note Splashes':
 						daValue = ClientPrefs.noteSplashes;
-					case 'Luzes Piscantes':
+					case 'Flashing Lights':
 						daValue = ClientPrefs.flashing;
 					case 'Downscroll':
 						daValue = ClientPrefs.downScroll;
 					case 'Middlescroll':
 						daValue = ClientPrefs.middleScroll;
-					case 'Missclick sem Erro':
+					case 'Ghost Tapping':
 						daValue = ClientPrefs.ghostTapping;
-					case 'Palavroes':
+					case 'Swearing':
 						daValue = ClientPrefs.cursing;
-					case 'Violencia':
+					case 'Violence':
 						daValue = ClientPrefs.violence;
-					case 'Zoom da Camera':
+					case 'Camera Zooms':
 						daValue = ClientPrefs.camZooms;
-					case 'Esconder Interface':
+					case 'Hide HUD':
 						daValue = ClientPrefs.hideHud;
-					case 'Persistir os Dados em Cache':
+					case 'Persistent Cached Data':
 						daValue = ClientPrefs.imagesPersist;
-					case 'Esconder duracao da musica':
+					case 'Hide Song Length':
 						daValue = ClientPrefs.hideTime;
 				}
 				checkbox.daValue = daValue;
@@ -1094,7 +1127,7 @@ class PreferencesSubstate extends MusicBeatSubstate
 				switch(options[textNumber[i]]) {
 					case 'Framerate':
 						daText = '' + ClientPrefs.framerate;
-					case 'Delay das Notas':
+					case 'Note Delay':
 						daText = ClientPrefs.noteOffset + 'ms';
 				}
 				var lastTracker:FlxSprite = text.sprTracker;

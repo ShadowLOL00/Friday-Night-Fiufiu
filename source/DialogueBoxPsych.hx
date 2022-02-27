@@ -83,22 +83,8 @@ class DialogueCharacter extends FlxSprite
 	public function reloadCharacterJson(character:String) {
 		var characterPath:String = 'images/dialogue/' + character + '.json';
 		var rawJson = null;
-
-		#if MODS_ALLOWED
-		var path:String = Paths.modFolders(characterPath);
-		if (!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath(characterPath);
-		}
-
-		if(!FileSystem.exists(path)) {
-			path = Paths.getPreloadPath('images/dialogue/' + DEFAULT_CHARACTER + '.json');
-		}
-		rawJson = File.getContent(path);
-
-		#else
 		var path:String = Paths.getPreloadPath(characterPath);
 		rawJson = Assets.getText(path);
-		#end
 		
 		jsonFile = cast Json.parse(rawJson);
 	}
@@ -125,7 +111,7 @@ class DialogueCharacter extends FlxSprite
 				leAnim = arrayAnims[FlxG.random.int(0, arrayAnims.length-1)];
 			}
 		}
-
+		
 		if(dialogueAnimations.exists(leAnim) &&
 		(dialogueAnimations.get(leAnim).loop_name == null ||
 		dialogueAnimations.get(leAnim).loop_name.length < 1 ||
@@ -145,7 +131,7 @@ class DialogueCharacter extends FlxSprite
 			}
 		} else {
 			offset.set(0, 0);
-			trace('Offsets not found! Dialogue character is badly formatted, anim: ' + leAnim + ', ' + (playIdle ? 'idle anim' : 'loop anim'));
+			//trace('Offsets not found! Dialogue character is badly formatted, anim: ' + leAnim + ', ' + (playIdle ? 'idle anim' : 'loop anim'));
 		}
 	}
 
@@ -290,7 +276,19 @@ class DialogueBoxPsych extends FlxSpriteGroup
 			bgFade.alpha += 0.5 * elapsed;
 			if(bgFade.alpha > 0.5) bgFade.alpha = 0.5;
 
-			if(PlayerSettings.player1.controls.ACCEPT) {
+		#if mobile
+		var justTouched:Bool = false;
+
+		for (touch in FlxG.touches.list)
+		{
+			justTouched = false;
+			
+			if (touch.justReleased){
+				justTouched = true;
+			}
+		}
+		#end
+		if (FlxG.keys.justPressed.ANY #if mobile || justTouched #end) {
 				if(!daText.finishedText) {
 					if(daText != null) {
 						daText.killTheTimer();
@@ -300,7 +298,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 					}
 					daText = new Alphabet(DEFAULT_TEXT_X, DEFAULT_TEXT_Y, textToType, false, true, 0.0, 0.7);
 					add(daText);
-					
+
 					if(skipDialogueThing != null) {
 						skipDialogueThing();
 					}
@@ -512,11 +510,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	}
 
 	public static function parseDialogue(path:String):DialogueFile {
-		#if MODS_ALLOWED
-		var rawJson = File.getContent(path);
-		#else
 		var rawJson = Assets.getText(path);
-		#end
 		return cast Json.parse(rawJson);
 	}
 

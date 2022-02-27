@@ -1,0 +1,395 @@
+#include <hxcpp.h>
+
+#ifndef INCLUDED_Paths
+#include <Paths.h>
+#endif
+#ifndef INCLUDED_Std
+#include <Std.h>
+#endif
+#ifndef INCLUDED_flixel_FlxBasic
+#include <flixel/FlxBasic.h>
+#endif
+#ifndef INCLUDED_flixel_FlxG
+#include <flixel/FlxG.h>
+#endif
+#ifndef INCLUDED_flixel_FlxObject
+#include <flixel/FlxObject.h>
+#endif
+#ifndef INCLUDED_flixel_FlxSprite
+#include <flixel/FlxSprite.h>
+#endif
+#ifndef INCLUDED_flixel_graphics_FlxGraphic
+#include <flixel/graphics/FlxGraphic.h>
+#endif
+#ifndef INCLUDED_flixel_graphics_frames_FlxAtlasFrames
+#include <flixel/graphics/frames/FlxAtlasFrames.h>
+#endif
+#ifndef INCLUDED_flixel_graphics_frames_FlxFrame
+#include <flixel/graphics/frames/FlxFrame.h>
+#endif
+#ifndef INCLUDED_flixel_graphics_frames_FlxFramesCollection
+#include <flixel/graphics/frames/FlxFramesCollection.h>
+#endif
+#ifndef INCLUDED_flixel_group_FlxTypedSpriteGroup
+#include <flixel/group/FlxTypedSpriteGroup.h>
+#endif
+#ifndef INCLUDED_flixel_input_IFlxInput
+#include <flixel/input/IFlxInput.h>
+#endif
+#ifndef INCLUDED_flixel_math_FlxPoint
+#include <flixel/math/FlxPoint.h>
+#endif
+#ifndef INCLUDED_flixel_tweens_FlxEase
+#include <flixel/tweens/FlxEase.h>
+#endif
+#ifndef INCLUDED_flixel_tweens_FlxTween
+#include <flixel/tweens/FlxTween.h>
+#endif
+#ifndef INCLUDED_flixel_tweens_misc_NumTween
+#include <flixel/tweens/misc/NumTween.h>
+#endif
+#ifndef INCLUDED_flixel_ui_FlxButton
+#include <flixel/ui/FlxButton.h>
+#endif
+#ifndef INCLUDED_flixel_ui_FlxTypedButton_flixel_text_FlxText
+#include <flixel/ui/FlxTypedButton_flixel_text_FlxText.h>
+#endif
+#ifndef INCLUDED_flixel_ui__FlxButton_FlxButtonEvent
+#include <flixel/ui/_FlxButton/FlxButtonEvent.h>
+#endif
+#ifndef INCLUDED_flixel_util_IFlxDestroyable
+#include <flixel/util/IFlxDestroyable.h>
+#endif
+#ifndef INCLUDED_flixel_util_IFlxPooled
+#include <flixel/util/IFlxPooled.h>
+#endif
+#ifndef INCLUDED_haxe_IMap
+#include <haxe/IMap.h>
+#endif
+#ifndef INCLUDED_haxe_ds_StringMap
+#include <haxe/ds/StringMap.h>
+#endif
+#ifndef INCLUDED_ui_Hitbox
+#include <ui/Hitbox.h>
+#endif
+
+HX_DEFINE_STACK_FRAME(_hx_pos_44cbda204f1eb265_12_new,"ui.Hitbox","new",0x08ebd684,"ui.Hitbox.new","ui/Hitbox.hx",12,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_81_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",81,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_78_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",78,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_87_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",87,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_84_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",84,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_93_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",93,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_90_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",90,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_61_createhitbox,"ui.Hitbox","createhitbox",0x3298cef0,"ui.Hitbox.createhitbox","ui/Hitbox.hx",61,0x3e9bdd4b)
+HX_LOCAL_STACK_FRAME(_hx_pos_44cbda204f1eb265_100_destroy,"ui.Hitbox","destroy",0x7b06151e,"ui.Hitbox.destroy","ui/Hitbox.hx",100,0x3e9bdd4b)
+namespace ui{
+
+void Hitbox_obj::__construct( ::Dynamic widghtScreen){
+            	HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_12_new)
+HXLINE(  18)		this->screensizey = 720;
+HXLINE(  16)		this->sizex = ((Float)320);
+HXLINE(  27)		super::__construct(null(),null(),null());
+HXLINE(  29)		if (::hx::IsNull( widghtScreen )) {
+HXLINE(  30)			widghtScreen = ::flixel::FlxG_obj::width;
+            		}
+HXLINE(  32)		Float _hx_tmp;
+HXDLIN(  32)		if (::hx::IsNotNull( widghtScreen )) {
+HXLINE(  32)			_hx_tmp = (( (Float)(widghtScreen) ) / ( (Float)(4) ));
+            		}
+            		else {
+HXLINE(  32)			_hx_tmp = ( (Float)(320) );
+            		}
+HXDLIN(  32)		this->sizex = _hx_tmp;
+HXLINE(  36)		this->hitbox =  ::flixel::group::FlxTypedSpriteGroup_obj::__alloc( HX_CTX ,null(),null(),null());
+HXLINE(  37)		this->hitbox->scrollFactor->set(null(),null());
+HXLINE(  39)		 ::flixel::FlxSprite hitbox_hint =  ::flixel::FlxSprite_obj::__alloc( HX_CTX ,0,0,null());
+HXDLIN(  39)		 ::flixel::FlxSprite hitbox_hint1 = hitbox_hint->loadGraphic(::Paths_obj::getPath(((HX_("images/",77,50,74,c1) + HX_("hitbox/hitbox_hint",97,36,a2,54)) + HX_(".png",3b,2d,bd,1e)),HX_("IMAGE",3b,57,57,3b),HX_("shared",a5,5e,2b,1d)),null(),null(),null(),null(),null());
+HXLINE(  41)		hitbox_hint1->set_alpha(((Float)0.35));
+HXLINE(  43)		if ((this->sizex != 320)) {
+HXLINE(  45)			hitbox_hint1->setGraphicSize(::flixel::FlxG_obj::width,null());
+HXLINE(  46)			hitbox_hint1->updateHitbox();
+            		}
+HXLINE(  49)		this->add(hitbox_hint1);
+HXLINE(  52)		 ::flixel::group::FlxTypedSpriteGroup _hx_tmp1 = this->hitbox;
+HXDLIN(  52)		_hx_tmp1->add(this->add((this->buttonLeft = this->createhitbox(( (Float)(0) ),HX_("left",07,08,b0,47))))).StaticCast<  ::flixel::FlxSprite >();
+HXLINE(  54)		 ::flixel::group::FlxTypedSpriteGroup _hx_tmp2 = this->hitbox;
+HXDLIN(  54)		_hx_tmp2->add(this->add((this->buttonDown = this->createhitbox(this->sizex,HX_("down",62,f8,6d,42))))).StaticCast<  ::flixel::FlxSprite >();
+HXLINE(  56)		 ::flixel::group::FlxTypedSpriteGroup _hx_tmp3 = this->hitbox;
+HXDLIN(  56)		_hx_tmp3->add(this->add((this->buttonUp = this->createhitbox((this->sizex * ( (Float)(2) )),HX_("up",5b,66,00,00))))).StaticCast<  ::flixel::FlxSprite >();
+HXLINE(  58)		 ::flixel::group::FlxTypedSpriteGroup _hx_tmp4 = this->hitbox;
+HXDLIN(  58)		_hx_tmp4->add(this->add((this->buttonRight = this->createhitbox((this->sizex * ( (Float)(3) )),HX_("right",dc,0b,64,e9))))).StaticCast<  ::flixel::FlxSprite >();
+            	}
+
+Dynamic Hitbox_obj::__CreateEmpty() { return new Hitbox_obj; }
+
+void *Hitbox_obj::_hx_vtable = 0;
+
+Dynamic Hitbox_obj::__Create(::hx::DynamicArray inArgs)
+{
+	::hx::ObjectPtr< Hitbox_obj > _hx_result = new Hitbox_obj();
+	_hx_result->__construct(inArgs[0]);
+	return _hx_result;
+}
+
+bool Hitbox_obj::_hx_isInstanceOf(int inClassId) {
+	if (inClassId<=(int)0x6bd7218c) {
+		if (inClassId<=(int)0x2c01639b) {
+			if (inClassId<=(int)0x288ce903) {
+				return inClassId==(int)0x00000001 || inClassId==(int)0x288ce903;
+			} else {
+				return inClassId==(int)0x2c01639b;
+			}
+		} else {
+			return inClassId==(int)0x6bd7218c;
+		}
+	} else {
+		return inClassId==(int)0x7ccf8994 || inClassId==(int)0x7dab0655;
+	}
+}
+
+ ::flixel::ui::FlxButton Hitbox_obj::createhitbox(Float X,::String framestring){
+            		HX_BEGIN_LOCAL_FUNC_S2(::hx::LocalFunc,_hx_Closure_1, ::flixel::ui::FlxButton,button,::Array< ::Dynamic>,tween) HXARGC(0)
+            		void _hx_run(){
+            			HX_BEGIN_LOCAL_FUNC_S1(::hx::LocalFunc,_hx_Closure_0, ::flixel::ui::FlxButton,button) HXARGC(1)
+            			void _hx_run(Float a){
+            				HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_81_createhitbox)
+HXLINE(  81)				button->set_alpha(a);
+            			}
+            			HX_END_LOCAL_FUNC1((void))
+
+            			HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_78_createhitbox)
+HXLINE(  79)			if (::hx::IsNotNull( tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >() )) {
+HXLINE(  80)				tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >()->cancel();
+            			}
+HXLINE(  81)			tween[0] = ::flixel::tweens::FlxTween_obj::num(button->alpha,((Float)0.75),((Float).075), ::Dynamic(::hx::Anon_obj::Create(1)
+            				->setFixed(0,HX_("ease",ee,8b,0c,43),::flixel::tweens::FlxEase_obj::circInOut_dyn())), ::Dynamic(new _hx_Closure_0(button)));
+            		}
+            		HX_END_LOCAL_FUNC0((void))
+
+            		HX_BEGIN_LOCAL_FUNC_S2(::hx::LocalFunc,_hx_Closure_3, ::flixel::ui::FlxButton,button,::Array< ::Dynamic>,tween) HXARGC(0)
+            		void _hx_run(){
+            			HX_BEGIN_LOCAL_FUNC_S1(::hx::LocalFunc,_hx_Closure_2, ::flixel::ui::FlxButton,button) HXARGC(1)
+            			void _hx_run(Float a){
+            				HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_87_createhitbox)
+HXLINE(  87)				button->set_alpha(a);
+            			}
+            			HX_END_LOCAL_FUNC1((void))
+
+            			HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_84_createhitbox)
+HXLINE(  85)			if (::hx::IsNotNull( tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >() )) {
+HXLINE(  86)				tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >()->cancel();
+            			}
+HXLINE(  87)			tween[0] = ::flixel::tweens::FlxTween_obj::num(button->alpha,( (Float)(0) ),((Float).15), ::Dynamic(::hx::Anon_obj::Create(1)
+            				->setFixed(0,HX_("ease",ee,8b,0c,43),::flixel::tweens::FlxEase_obj::circInOut_dyn())), ::Dynamic(new _hx_Closure_2(button)));
+            		}
+            		HX_END_LOCAL_FUNC0((void))
+
+            		HX_BEGIN_LOCAL_FUNC_S2(::hx::LocalFunc,_hx_Closure_5, ::flixel::ui::FlxButton,button,::Array< ::Dynamic>,tween) HXARGC(0)
+            		void _hx_run(){
+            			HX_BEGIN_LOCAL_FUNC_S1(::hx::LocalFunc,_hx_Closure_4, ::flixel::ui::FlxButton,button) HXARGC(1)
+            			void _hx_run(Float a){
+            				HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_93_createhitbox)
+HXLINE(  93)				button->set_alpha(a);
+            			}
+            			HX_END_LOCAL_FUNC1((void))
+
+            			HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_90_createhitbox)
+HXLINE(  91)			if (::hx::IsNotNull( tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >() )) {
+HXLINE(  92)				tween->__get(0).StaticCast<  ::flixel::tweens::FlxTween >()->cancel();
+            			}
+HXLINE(  93)			tween[0] = ::flixel::tweens::FlxTween_obj::num(button->alpha,( (Float)(0) ),((Float).15), ::Dynamic(::hx::Anon_obj::Create(1)
+            				->setFixed(0,HX_("ease",ee,8b,0c,43),::flixel::tweens::FlxEase_obj::circInOut_dyn())), ::Dynamic(new _hx_Closure_4(button)));
+            		}
+            		HX_END_LOCAL_FUNC0((void))
+
+            	HX_GC_STACKFRAME(&_hx_pos_44cbda204f1eb265_61_createhitbox)
+HXLINE(  62)		 ::flixel::ui::FlxButton button =  ::flixel::ui::FlxButton_obj::__alloc( HX_CTX ,X,0,null(),null());
+HXLINE(  63)		 ::Dynamic frames = ::Paths_obj::getPath(((HX_("images/",77,50,74,c1) + HX_("hitbox/hitbox",6f,30,ec,8e)) + HX_(".png",3b,2d,bd,1e)),HX_("IMAGE",3b,57,57,3b),HX_("shared",a5,5e,2b,1d));
+HXDLIN(  63)		 ::flixel::graphics::frames::FlxAtlasFrames frames1 = ::flixel::graphics::frames::FlxAtlasFrames_obj::fromSparrow(frames,::Paths_obj::getPath(((HX_("images/",77,50,74,c1) + HX_("hitbox/hitbox",6f,30,ec,8e)) + HX_(".xml",69,3e,c3,1e)),HX_("TEXT",ad,94,ba,37),HX_("shared",a5,5e,2b,1d)));
+HXLINE(  65)		 ::flixel::graphics::FlxGraphic graphic = ::flixel::graphics::FlxGraphic_obj::fromFrame(( ( ::flixel::graphics::frames::FlxFrame)(frames1->framesHash->get(framestring)) ),null(),null(),null());
+HXLINE(  67)		button->loadGraphic(graphic,null(),null(),null(),null(),null());
+HXLINE(  71)		 ::flixel::ui::FlxButton button1 = button;
+HXDLIN(  71)		int _hx_tmp = ::Std_obj::_hx_int(this->sizex);
+HXDLIN(  71)		button1->setGraphicSize(_hx_tmp,::flixel::FlxG_obj::height);
+HXLINE(  72)		button->updateHitbox();
+HXLINE(  74)		button->set_alpha(( (Float)(0) ));
+HXLINE(  76)		::Array< ::Dynamic> tween = ::Array_obj< ::Dynamic>::__new(0);
+HXLINE(  78)		button->onDown->callback =  ::Dynamic(new _hx_Closure_1(button,tween));
+HXLINE(  84)		button->onUp->callback =  ::Dynamic(new _hx_Closure_3(button,tween));
+HXLINE(  90)		button->onOut->callback =  ::Dynamic(new _hx_Closure_5(button,tween));
+HXLINE(  96)		return button;
+            	}
+
+
+HX_DEFINE_DYNAMIC_FUNC2(Hitbox_obj,createhitbox,return )
+
+void Hitbox_obj::destroy(){
+            	HX_STACKFRAME(&_hx_pos_44cbda204f1eb265_100_destroy)
+HXLINE( 101)		this->super::destroy();
+HXLINE( 103)		this->buttonLeft = null();
+HXLINE( 104)		this->buttonDown = null();
+HXLINE( 105)		this->buttonUp = null();
+HXLINE( 106)		this->buttonRight = null();
+            	}
+
+
+
+::hx::ObjectPtr< Hitbox_obj > Hitbox_obj::__new( ::Dynamic widghtScreen) {
+	::hx::ObjectPtr< Hitbox_obj > __this = new Hitbox_obj();
+	__this->__construct(widghtScreen);
+	return __this;
+}
+
+::hx::ObjectPtr< Hitbox_obj > Hitbox_obj::__alloc(::hx::Ctx *_hx_ctx, ::Dynamic widghtScreen) {
+	Hitbox_obj *__this = (Hitbox_obj*)(::hx::Ctx::alloc(_hx_ctx, sizeof(Hitbox_obj), true, "ui.Hitbox"));
+	*(void **)__this = Hitbox_obj::_hx_vtable;
+	__this->__construct(widghtScreen);
+	return __this;
+}
+
+Hitbox_obj::Hitbox_obj()
+{
+}
+
+void Hitbox_obj::__Mark(HX_MARK_PARAMS)
+{
+	HX_MARK_BEGIN_CLASS(Hitbox);
+	HX_MARK_MEMBER_NAME(hitbox,"hitbox");
+	HX_MARK_MEMBER_NAME(sizex,"sizex");
+	HX_MARK_MEMBER_NAME(screensizey,"screensizey");
+	HX_MARK_MEMBER_NAME(buttonLeft,"buttonLeft");
+	HX_MARK_MEMBER_NAME(buttonDown,"buttonDown");
+	HX_MARK_MEMBER_NAME(buttonUp,"buttonUp");
+	HX_MARK_MEMBER_NAME(buttonRight,"buttonRight");
+	 ::flixel::group::FlxTypedSpriteGroup_obj::__Mark(HX_MARK_ARG);
+	HX_MARK_END_CLASS();
+}
+
+void Hitbox_obj::__Visit(HX_VISIT_PARAMS)
+{
+	HX_VISIT_MEMBER_NAME(hitbox,"hitbox");
+	HX_VISIT_MEMBER_NAME(sizex,"sizex");
+	HX_VISIT_MEMBER_NAME(screensizey,"screensizey");
+	HX_VISIT_MEMBER_NAME(buttonLeft,"buttonLeft");
+	HX_VISIT_MEMBER_NAME(buttonDown,"buttonDown");
+	HX_VISIT_MEMBER_NAME(buttonUp,"buttonUp");
+	HX_VISIT_MEMBER_NAME(buttonRight,"buttonRight");
+	 ::flixel::group::FlxTypedSpriteGroup_obj::__Visit(HX_VISIT_ARG);
+}
+
+::hx::Val Hitbox_obj::__Field(const ::String &inName,::hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 5:
+		if (HX_FIELD_EQ(inName,"sizex") ) { return ::hx::Val( sizex ); }
+		break;
+	case 6:
+		if (HX_FIELD_EQ(inName,"hitbox") ) { return ::hx::Val( hitbox ); }
+		break;
+	case 7:
+		if (HX_FIELD_EQ(inName,"destroy") ) { return ::hx::Val( destroy_dyn() ); }
+		break;
+	case 8:
+		if (HX_FIELD_EQ(inName,"buttonUp") ) { return ::hx::Val( buttonUp ); }
+		break;
+	case 10:
+		if (HX_FIELD_EQ(inName,"buttonLeft") ) { return ::hx::Val( buttonLeft ); }
+		if (HX_FIELD_EQ(inName,"buttonDown") ) { return ::hx::Val( buttonDown ); }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"screensizey") ) { return ::hx::Val( screensizey ); }
+		if (HX_FIELD_EQ(inName,"buttonRight") ) { return ::hx::Val( buttonRight ); }
+		break;
+	case 12:
+		if (HX_FIELD_EQ(inName,"createhitbox") ) { return ::hx::Val( createhitbox_dyn() ); }
+	}
+	return super::__Field(inName,inCallProp);
+}
+
+::hx::Val Hitbox_obj::__SetField(const ::String &inName,const ::hx::Val &inValue,::hx::PropertyAccess inCallProp)
+{
+	switch(inName.length) {
+	case 5:
+		if (HX_FIELD_EQ(inName,"sizex") ) { sizex=inValue.Cast< Float >(); return inValue; }
+		break;
+	case 6:
+		if (HX_FIELD_EQ(inName,"hitbox") ) { hitbox=inValue.Cast<  ::flixel::group::FlxTypedSpriteGroup >(); return inValue; }
+		break;
+	case 8:
+		if (HX_FIELD_EQ(inName,"buttonUp") ) { buttonUp=inValue.Cast<  ::flixel::ui::FlxButton >(); return inValue; }
+		break;
+	case 10:
+		if (HX_FIELD_EQ(inName,"buttonLeft") ) { buttonLeft=inValue.Cast<  ::flixel::ui::FlxButton >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"buttonDown") ) { buttonDown=inValue.Cast<  ::flixel::ui::FlxButton >(); return inValue; }
+		break;
+	case 11:
+		if (HX_FIELD_EQ(inName,"screensizey") ) { screensizey=inValue.Cast< int >(); return inValue; }
+		if (HX_FIELD_EQ(inName,"buttonRight") ) { buttonRight=inValue.Cast<  ::flixel::ui::FlxButton >(); return inValue; }
+	}
+	return super::__SetField(inName,inValue,inCallProp);
+}
+
+void Hitbox_obj::__GetFields(Array< ::String> &outFields)
+{
+	outFields->push(HX_("hitbox",98,ed,27,57));
+	outFields->push(HX_("sizex",97,08,d9,7c));
+	outFields->push(HX_("screensizey",ac,e5,30,a1));
+	outFields->push(HX_("buttonLeft",19,77,a6,b1));
+	outFields->push(HX_("buttonDown",74,67,64,ac));
+	outFields->push(HX_("buttonUp",ed,8c,32,5c));
+	outFields->push(HX_("buttonRight",8a,cc,0e,37));
+	super::__GetFields(outFields);
+};
+
+#ifdef HXCPP_SCRIPTABLE
+static ::hx::StorageInfo Hitbox_obj_sMemberStorageInfo[] = {
+	{::hx::fsObject /*  ::flixel::group::FlxTypedSpriteGroup */ ,(int)offsetof(Hitbox_obj,hitbox),HX_("hitbox",98,ed,27,57)},
+	{::hx::fsFloat,(int)offsetof(Hitbox_obj,sizex),HX_("sizex",97,08,d9,7c)},
+	{::hx::fsInt,(int)offsetof(Hitbox_obj,screensizey),HX_("screensizey",ac,e5,30,a1)},
+	{::hx::fsObject /*  ::flixel::ui::FlxButton */ ,(int)offsetof(Hitbox_obj,buttonLeft),HX_("buttonLeft",19,77,a6,b1)},
+	{::hx::fsObject /*  ::flixel::ui::FlxButton */ ,(int)offsetof(Hitbox_obj,buttonDown),HX_("buttonDown",74,67,64,ac)},
+	{::hx::fsObject /*  ::flixel::ui::FlxButton */ ,(int)offsetof(Hitbox_obj,buttonUp),HX_("buttonUp",ed,8c,32,5c)},
+	{::hx::fsObject /*  ::flixel::ui::FlxButton */ ,(int)offsetof(Hitbox_obj,buttonRight),HX_("buttonRight",8a,cc,0e,37)},
+	{ ::hx::fsUnknown, 0, null()}
+};
+static ::hx::StaticInfo *Hitbox_obj_sStaticStorageInfo = 0;
+#endif
+
+static ::String Hitbox_obj_sMemberFields[] = {
+	HX_("hitbox",98,ed,27,57),
+	HX_("sizex",97,08,d9,7c),
+	HX_("screensizey",ac,e5,30,a1),
+	HX_("buttonLeft",19,77,a6,b1),
+	HX_("buttonDown",74,67,64,ac),
+	HX_("buttonUp",ed,8c,32,5c),
+	HX_("buttonRight",8a,cc,0e,37),
+	HX_("createhitbox",94,b9,e8,44),
+	HX_("destroy",fa,2c,86,24),
+	::String(null()) };
+
+::hx::Class Hitbox_obj::__mClass;
+
+void Hitbox_obj::__register()
+{
+	Hitbox_obj _hx_dummy;
+	Hitbox_obj::_hx_vtable = *(void **)&_hx_dummy;
+	::hx::Static(__mClass) = new ::hx::Class_obj();
+	__mClass->mName = HX_("ui.Hitbox",92,84,9d,e2);
+	__mClass->mSuper = &super::__SGetClass();
+	__mClass->mConstructEmpty = &__CreateEmpty;
+	__mClass->mConstructArgs = &__Create;
+	__mClass->mGetStaticField = &::hx::Class_obj::GetNoStaticField;
+	__mClass->mSetStaticField = &::hx::Class_obj::SetNoStaticField;
+	__mClass->mStatics = ::hx::Class_obj::dupFunctions(0 /* sStaticFields */);
+	__mClass->mMembers = ::hx::Class_obj::dupFunctions(Hitbox_obj_sMemberFields);
+	__mClass->mCanCast = ::hx::TCanCast< Hitbox_obj >;
+#ifdef HXCPP_SCRIPTABLE
+	__mClass->mMemberStorageInfo = Hitbox_obj_sMemberStorageInfo;
+#endif
+#ifdef HXCPP_SCRIPTABLE
+	__mClass->mStaticStorageInfo = Hitbox_obj_sStaticStorageInfo;
+#endif
+	::hx::_hx_RegisterClass(__mClass->mName, __mClass);
+}
+
+} // end namespace ui
