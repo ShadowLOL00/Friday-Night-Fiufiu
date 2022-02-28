@@ -8,6 +8,7 @@ import openfl.Lib;
 import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
+import extensaoprata.Limpeza;
 
 class Main extends Sprite
 {
@@ -56,7 +57,7 @@ class Main extends Sprite
 		setupGame();
 	}
 
-	public static function dumpCache() // THIS MOD WASTES 1-2 FUCKING G I G A B Y T E S OF MEMORY SO OF COURSE I COPIED KADE'S CODE FOR FUCKS SAKE
+	public static function dumpCache()
 		{
 			@:privateAccess
 			for (key in FlxG.bitmap._cache.keys())
@@ -70,6 +71,8 @@ class Main extends Sprite
 				}
 			}
 			Assets.cache.clear("songs");
+			Limpeza.cache.check()
+			
 			// */
 		}
 
