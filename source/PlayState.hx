@@ -2112,7 +2112,7 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 		if(ratingString == '?') {
-			scoreTxt.text = 'Pontuação: ' + songScore + ' | Erros: ' + songMisses + ' | Avaliação: ' + ratingString;
+			scoreTxt.text = 'Teste by Anderson777 | Pontuação: ' + songScore + ' | Erros: ' + songMisses + ' | Avaliação: ' + ratingString;
 		} else {
 			scoreTxt.text = 'Pontuação: ' + songScore + ' | Erros: ' + songMisses + ' | Avaliação: ' + ratingString + ' (' + Math.floor(ratingPercent * 100) + '%)';
 		}
