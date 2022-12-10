@@ -74,7 +74,7 @@ class Main extends Sprite
 			Limpeza.cache.check()
 			
 			// */
-		}
+		};
 
 	private function setupGame():Void
 	{
